@@ -1,0 +1,26 @@
+{
+  "profile": {
+    "account_id": 348245720,
+    "personaname": "github.com/theoliverlear",
+    "name": null,
+    "plus": true,
+    "cheese": 0,
+    "steamid": "76561198308511448",
+    "avatar": "https://avatars.steamstatic.com/789602a3ae50e8119d3d063558dbc9de4eb525db.jpg",
+    "avatarmedium": "https://avatars.steamstatic.com/789602a3ae50e8119d3d063558dbc9de4eb525db_medium.jpg",
+    "avatarfull": "https://avatars.steamstatic.com/789602a3ae50e8119d3d063558dbc9de4eb525db_full.jpg",
+    "profileurl": "https://steamcommunity.com/profiles/76561198308511448/",
+    "last_login": "2023-06-23T21:11:54.987Z",
+    "loccountrycode": null,
+    "status": null,
+    "is_contributor": false,
+    "is_subscriber": false
+  },
+  "solo_competitive_rank": null,
+  "competitive_rank": null,
+  "rank_tier": 21,
+  "leaderboard_rank": null,
+  "mmr_estimate": {
+    "estimate": 2259
+  }
+}
