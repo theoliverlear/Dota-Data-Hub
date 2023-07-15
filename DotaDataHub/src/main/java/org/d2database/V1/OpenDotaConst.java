@@ -1,4 +1,4 @@
-package org.d2database;
+package org.d2database.V1;
 
 public enum OpenDotaConst {
     BASE_URL("https://api.opendota.com/api/");

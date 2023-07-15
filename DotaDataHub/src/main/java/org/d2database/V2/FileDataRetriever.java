@@ -1,7 +1,8 @@
-package org.d2database;
+package org.d2database.V2;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 public class FileDataRetriever {
     int targetLineIndex;
     String filePath;

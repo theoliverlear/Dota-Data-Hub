@@ -1,7 +1,7 @@
-package org.d2database;
+package org.d2database.V1;
 
 public interface GetData {
-    void getData();
+    void fetchRawData();
     String retrieveValue(String key);
 
 }

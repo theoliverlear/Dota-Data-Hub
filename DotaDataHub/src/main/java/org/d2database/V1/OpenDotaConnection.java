@@ -1,9 +1,8 @@
-package org.d2database;
+package org.d2database.V1;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -23,7 +22,7 @@ public class OpenDotaConnection {
     public OpenDotaConnection(String apiKey, String endPoint, String method) {
         this.apiKey = apiKey;
         this.endPoint = endPoint;
-        this.urlPath = OpenDotaConst.BASE_URL.getBaseUrl() + this.endPoint + "?api_key=" + this.apiKey;
+        this.urlPath = OpenDotaConst.BASE_URL.getBaseUrl() + this.endPoint + "?limit=1";
         this.method = method;
         this.requestHeaders = new HashMap<>();
         this.pageData = "";
@@ -89,7 +88,7 @@ public class OpenDotaConnection {
         this.endPoint = endPoint;
     }
     public void updateUrlPath() {
-        this.urlPath = OpenDotaConst.BASE_URL.getBaseUrl() + this.endPoint + "?api_key=" + this.apiKey;
+        this.urlPath = OpenDotaConst.BASE_URL.getBaseUrl() + this.endPoint + "?limit=1&" + "api_key=" + this.apiKey;
     }
     public void newURL(String endPoint) {
         this.endPoint = endPoint;
