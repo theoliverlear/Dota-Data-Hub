@@ -28,16 +28,41 @@ public class PlayerData {
     //-----------------------Fetch-Dataset-From-Json--------------------------
     public void fetchDatasetFromJson() {
         //--------------------Regex-Patterns-For-Data-------------------------
+        /*
+            - personaName ✔
+            - rankTier ✔
+            - name
+            - dotaPlus ✔
+            - soloCompetitiveRank ✔
+            - competitiveRank
+            - leaderboardRank
+            - mmrEstimate
+            - steamId
+            - profileUrl
+            - lastLogin
+            - locCountryCode
+            - isContributor
+            - isSubscriber
+
+
+         */
+
+
         String[] personaName = {"(personaname)", "(\":\")", "(.[^\"]*.*?)"};
         String[] rankTier = {"(rank_tier)", "(\":)", "(.[^,}]*.*?)"};
         String[] name = {"(name)", "(\":)", "(.[^,}]*.*?)"};
-
         String[] dotaPlus = {"(plus)", "(\":)", "(.[^,}]*.*?)"};
+        // (solo_competitive_rank)(":)(.[^,}]*.*?)
+        // (leaderboard_rank)(":)(.[^,}]*.*?)
+        // (leaderboard_rank)(":)(.[^,}]*.*?)
+        String[] soloCompetitiveRank = {"(solo_competitive_rank)", "(\":)", "(.[^,}]*.*?)"};
+        String[] leaderboardRank = {"(leaderboard_rank)", "(\":)", "(.[^,}]*.*?)"};
 
-        String[][] regexes = {personaName, rankTier, name, dotaPlus};
+        String[][] regexes = {personaName, rankTier, name, dotaPlus,
+                              soloCompetitiveRank, leaderboardRank};
 
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < regexes.length; i++) {
             String keyRegex = regexes[i][0];
             String bufferRegex = regexes[i][1];
             String valueRegex = regexes[i][2];
