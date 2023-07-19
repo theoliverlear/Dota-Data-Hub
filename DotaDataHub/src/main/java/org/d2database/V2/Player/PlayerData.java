@@ -31,14 +31,14 @@ public class PlayerData {
         /*
             - personaName ✔
             - rankTier ✔
-            - name
+            - name ✔
             - dotaPlus ✔
             - soloCompetitiveRank ✔
-            - competitiveRank
-            - leaderboardRank
-            - mmrEstimate
-            - steamId
-            - profileUrl
+            - competitiveRank ✔
+            - leaderboardRank ✔
+            - mmrEstimate ✔
+            - steamId ✔
+            - profileUrl ✔
             - lastLogin
             - locCountryCode
             - isContributor
@@ -50,16 +50,30 @@ public class PlayerData {
 
         String[] personaName = {"(personaname)", "(\":\")", "(.[^\"]*.*?)"};
         String[] rankTier = {"(rank_tier)", "(\":)", "(.[^,}]*.*?)"};
-        String[] name = {"(name)", "(\":)", "(.[^,}]*.*?)"};
+        String[] name = {".[^a](name)", "(\":)", "(.[^,}]*.*?)"};
         String[] dotaPlus = {"(plus)", "(\":)", "(.[^,}]*.*?)"};
         // (solo_competitive_rank)(":)(.[^,}]*.*?)
         // (leaderboard_rank)(":)(.[^,}]*.*?)
         // (leaderboard_rank)(":)(.[^,}]*.*?)
+        // .[^_](competitive_rank)(":)(.[^,}]*.*?)
+        // .[^_](estimate)(":)(.[^,}]*.*?)
+        // (steamid)(":")(.[^,}"]*.*?)
+        // (profileurl)(":")(.[^,}"]*.*?)
+        // (last_login)(":")(.[^,}"]*.*?)
+        // (loccountrycode)(":)(.[^,}"]*.*?)
         String[] soloCompetitiveRank = {"(solo_competitive_rank)", "(\":)", "(.[^,}]*.*?)"};
+        String[] competitiveRank = {".[^_](competitive_rank)", "(\":)", "(.[^,}]*.*?)"};
         String[] leaderboardRank = {"(leaderboard_rank)", "(\":)", "(.[^,}]*.*?)"};
+        String[] estimate = {".[^_](estimate)", "(\":)", "(.[^,}]*.*?)"};
+        String[] steamId = {"(steamid)", "(\":\")", "(.[^,}\"]*.*?)"};
+        String[] profileUrl = {"(profileurl)", "(\":\")", "(.[^,}\"]*.*?)"};
+        String[] lastLogin = {"(last_login)", "(\":\")", "(.[^,}\"]*.*?)"};
+
 
         String[][] regexes = {personaName, rankTier, name, dotaPlus,
-                              soloCompetitiveRank, leaderboardRank};
+                              soloCompetitiveRank, competitiveRank,
+                              leaderboardRank, estimate, steamId, profileUrl,
+                              lastLogin};
 
 
         for (int i = 0; i < regexes.length; i++) {
