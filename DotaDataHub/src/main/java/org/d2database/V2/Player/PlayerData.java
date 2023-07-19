@@ -11,7 +11,7 @@ public class PlayerData {
     //----------------------------Fetch-Player-Data---------------------------
     String personaName, rankTier, name, dotaPlus, soloCompetitiveRank,
            competitiveRank, leaderboardRank, mmrEstimate, steamId, profileUrl,
-           lastLogin, locCountryCode, isContributor, isSubscriber;
+           lastLogin, locCountryCode, isContributor, isSubscriber, avatar;
     public PlayerData(String accountId, StringBuilder playerJson) {
         //--------------------------Fetch-Variables---------------------------
         this.accountId = accountId;
@@ -30,7 +30,8 @@ public class PlayerData {
         this.numKeyValues = tempPlayerJsonSplit.length;
     }
     //-----------------------Fetch-Dataset-From-Json--------------------------
-    public void fetchDatasetFromJson() {
+    public void fetchDatasetFromJson() { // use ✘ for false and ✔ for true
+                                         // or for completed or not completed
         /*
             - personaName         ✔
             - rankTier            ✔
@@ -46,6 +47,7 @@ public class PlayerData {
             - locCountryCode      ✔
             - isContributor       ✔
             - isSubscriber        ✔
+            - avatar              ✔
          */
         //----------------------Regex-Patterns-For-Data-----------------------
         String[] personaName = {"(personaname)", "(\":\")", "(.[^\"]*.*?)"};
@@ -58,14 +60,15 @@ public class PlayerData {
         String[] estimate = {".[^_](estimate)", "(\":)", "(.[^,}]*.*?)"};
         String[] steamId = {"(steamid)", "(\":\")", "(.[^,}\"]*.*?)"};
         String[] profileUrl = {"(profileurl)", "(\":\")", "(.[^,}\"]*.*?)"};
-        String[] lastLogin = {"(last_login)", "(\":\")", "(.[^,}\"]*.*?)"};
+        String[] lastLogin = {"(last_login)", "(\":\")", "(.[^,}\"Z]*.*?)"};
         String[] isSubscriber = {"(is_subscriber)", "(\":)", "(.[^,}\"]*.*?)"};
         String[] isContributor = {"(is_contributor)", "(\":)", "(.[^,}\"]*.*?)"};
+        String[] avatar = {"(avatar)", "(\":\")", "(.[^,}\"]*.*?)"};
         //-----------------------Player-Data-Regexes--------------------------
         String[][] fullRegexesList = {personaName, rankTier, name, dotaPlus,
                               soloCompetitiveRank, competitiveRank,
                               leaderboardRank, estimate, steamId, profileUrl,
-                              lastLogin, isSubscriber, isContributor};
+                              lastLogin, isSubscriber, isContributor, avatar};
         //-------------------------Fetch-Data-To-Map--------------------------
         for (String[] regexes : fullRegexesList) {
             String keyRegex = regexes[0];
@@ -95,6 +98,7 @@ public class PlayerData {
         this.locCountryCode = this.playerDataKeyValue.get("loccountrycode");
         this.isContributor = this.playerDataKeyValue.get("is_contributor");
         this.isSubscriber = this.playerDataKeyValue.get("is_subscriber");
+        this.avatar = this.playerDataKeyValue.get("avatar");
     }
     //-------------------------------Getters----------------------------------
     public String getPersonaName() {
@@ -107,7 +111,6 @@ public class PlayerData {
     public String getName() {
         return this.name;
     }
-
     public String getDotaPlus() {
         return this.dotaPlus;
     }
@@ -150,5 +153,7 @@ public class PlayerData {
     public String getIsSubscriber() {
         return this.isSubscriber;
     }
-
+    public String getAvatar() {
+        return this.avatar;
+    }
 }
