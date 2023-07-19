@@ -1,14 +1,11 @@
 package org.d2database.V2.Player;
-
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 public class PlayerData {
     //-----------------------Variables-Needed-To-Fetch-Data-------------------
     String accountId;
     StringBuilder playerJson;
-    StringBuilder playerDataJson;
     int numKeyValues;
     HashMap<String, String> playerDataKeyValue;
     //----------------------------Fetch-Player-Data---------------------------
@@ -34,7 +31,6 @@ public class PlayerData {
     }
     //-----------------------Fetch-Dataset-From-Json--------------------------
     public void fetchDatasetFromJson() {
-        //--------------------Regex-Patterns-For-Data-------------------------
         /*
             - personaName         ✔
             - rankTier            ✔
@@ -51,6 +47,7 @@ public class PlayerData {
             - isContributor       ✔
             - isSubscriber        ✔
          */
+        //----------------------Regex-Patterns-For-Data-----------------------
         String[] personaName = {"(personaname)", "(\":\")", "(.[^\"]*.*?)"};
         String[] rankTier = {"(rank_tier)", "(\":)", "(.[^,}]*.*?)"};
         String[] name = {".[^a](name)", "(\":)", "(.[^,}]*.*?)"};
@@ -64,29 +61,25 @@ public class PlayerData {
         String[] lastLogin = {"(last_login)", "(\":\")", "(.[^,}\"]*.*?)"};
         String[] isSubscriber = {"(is_subscriber)", "(\":)", "(.[^,}\"]*.*?)"};
         String[] isContributor = {"(is_contributor)", "(\":)", "(.[^,}\"]*.*?)"};
-
-        String[][] regexes = {personaName, rankTier, name, dotaPlus,
+        //-----------------------Player-Data-Regexes--------------------------
+        String[][] fullRegexesList = {personaName, rankTier, name, dotaPlus,
                               soloCompetitiveRank, competitiveRank,
                               leaderboardRank, estimate, steamId, profileUrl,
                               lastLogin, isSubscriber, isContributor};
-
-
-        for (int i = 0; i < regexes.length; i++) {
-            String keyRegex = regexes[i][0];
-            String bufferRegex = regexes[i][1];
-            String valueRegex = regexes[i][2];
+        //-------------------------Fetch-Data-To-Map--------------------------
+        for (String[] regexes : fullRegexesList) {
+            String keyRegex = regexes[0];
+            String bufferRegex = regexes[1];
+            String valueRegex = regexes[2];
             String regex = keyRegex + bufferRegex + valueRegex;
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(this.playerJson.toString());
             while (matcher.find()) {
-                System.out.println(matcher.group(1));
-                System.out.println(matcher.group(2));
-                System.out.println(matcher.group(3));
                 this.playerDataKeyValue.put(matcher.group(1), matcher.group(3));
             }
         }
     }
-    //-----------------------Instantiate-From-Dataset-------------------------
+    //-------------------------Instantiate-From-Map---------------------------
     public void instantiateFromDataset() {
         this.personaName = this.playerDataKeyValue.get("personaname");
         this.rankTier = this.playerDataKeyValue.get("rank_tier");
@@ -103,4 +96,59 @@ public class PlayerData {
         this.isContributor = this.playerDataKeyValue.get("is_contributor");
         this.isSubscriber = this.playerDataKeyValue.get("is_subscriber");
     }
+    //-------------------------------Getters----------------------------------
+    public String getPersonaName() {
+        return this.personaName;
+    }
+    public String getRankTier() {
+        return this.rankTier;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDotaPlus() {
+        return this.dotaPlus;
+    }
+
+    public String getSoloCompetitiveRank() {
+        return this.soloCompetitiveRank;
+    }
+    public String getCompetitiveRank() {
+        return this.competitiveRank;
+    }
+
+    public String getLeaderboardRank() {
+        return this.leaderboardRank;
+    }
+
+    public String getMmrEstimate() {
+        return this.mmrEstimate;
+    }
+
+    public String getSteamId() {
+        return this.steamId;
+    }
+
+    public String getProfileUrl() {
+        return this.profileUrl;
+    }
+
+    public String getLastLogin() {
+        return this.lastLogin;
+    }
+
+    public String getLocCountryCode() {
+        return this.locCountryCode;
+    }
+
+    public String getIsContributor() {
+        return this.isContributor;
+    }
+
+    public String getIsSubscriber() {
+        return this.isSubscriber;
+    }
+
 }
