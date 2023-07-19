@@ -5,18 +5,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlayerData {
+    //-----------------------Variables-Needed-To-Fetch-Data-------------------
     String accountId;
     StringBuilder playerJson;
     StringBuilder playerDataJson;
     int numKeyValues;
     HashMap<String, String> playerDataKeyValue;
+    //----------------------------Fetch-Player-Data---------------------------
+    String personaName, rankTier, name, dotaPlus, soloCompetitiveRank,
+           competitiveRank, leaderboardRank, mmrEstimate, steamId, profileUrl,
+           lastLogin, locCountryCode, isContributor, isSubscriber;
     public PlayerData(String accountId, StringBuilder playerJson) {
+        //--------------------------Fetch-Variables---------------------------
         this.accountId = accountId;
         this.playerJson = playerJson;
         this.calcNumKeyValues();
-        playerDataKeyValue = new HashMap<>();
+        this.playerDataKeyValue = new HashMap<>();
         this.fetchDatasetFromJson();
-
+        //--------------------------Instantiate-Variables---------------------
+        this.instantiateFromDataset();
     }
     // public void invokeStack()
     //-------------------------Verify-Size-Of-Json----------------------------
@@ -29,22 +36,21 @@ public class PlayerData {
     public void fetchDatasetFromJson() {
         //--------------------Regex-Patterns-For-Data-------------------------
         /*
-            - personaName ✔
-            - rankTier ✔
-            - name ✔
-            - dotaPlus ✔
+            - personaName         ✔
+            - rankTier            ✔
+            - name                ✔
+            - dotaPlus            ✔
             - soloCompetitiveRank ✔
-            - competitiveRank ✔
-            - leaderboardRank ✔
-            - mmrEstimate ✔
-            - steamId ✔
-            - profileUrl ✔
-            - lastLogin ✔
-            - locCountryCode ✔
-            - isContributor ✔
-            - isSubscriber ✔
+            - competitiveRank     ✔
+            - leaderboardRank     ✔
+            - mmrEstimate         ✔
+            - steamId             ✔
+            - profileUrl          ✔
+            - lastLogin           ✔
+            - locCountryCode      ✔
+            - isContributor       ✔
+            - isSubscriber        ✔
          */
-
         String[] personaName = {"(personaname)", "(\":\")", "(.[^\"]*.*?)"};
         String[] rankTier = {"(rank_tier)", "(\":)", "(.[^,}]*.*?)"};
         String[] name = {".[^a](name)", "(\":)", "(.[^,}]*.*?)"};
@@ -76,7 +82,25 @@ public class PlayerData {
                 System.out.println(matcher.group(1));
                 System.out.println(matcher.group(2));
                 System.out.println(matcher.group(3));
+                this.playerDataKeyValue.put(matcher.group(1), matcher.group(3));
             }
         }
+    }
+    //-----------------------Instantiate-From-Dataset-------------------------
+    public void instantiateFromDataset() {
+        this.personaName = this.playerDataKeyValue.get("personaname");
+        this.rankTier = this.playerDataKeyValue.get("rank_tier");
+        this.name = this.playerDataKeyValue.get("name");
+        this.dotaPlus = this.playerDataKeyValue.get("plus");
+        this.soloCompetitiveRank = this.playerDataKeyValue.get("solo_competitive_rank");
+        this.competitiveRank = this.playerDataKeyValue.get("competitive_rank");
+        this.leaderboardRank = this.playerDataKeyValue.get("leaderboard_rank");
+        this.mmrEstimate = this.playerDataKeyValue.get("estimate");
+        this.steamId = this.playerDataKeyValue.get("steamid");
+        this.profileUrl = this.playerDataKeyValue.get("profileurl");
+        this.lastLogin = this.playerDataKeyValue.get("last_login");
+        this.locCountryCode = this.playerDataKeyValue.get("loccountrycode");
+        this.isContributor = this.playerDataKeyValue.get("is_contributor");
+        this.isSubscriber = this.playerDataKeyValue.get("is_subscriber");
     }
 }
