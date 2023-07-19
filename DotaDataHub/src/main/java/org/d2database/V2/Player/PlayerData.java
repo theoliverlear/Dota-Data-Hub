@@ -39,28 +39,16 @@ public class PlayerData {
             - mmrEstimate ✔
             - steamId ✔
             - profileUrl ✔
-            - lastLogin
-            - locCountryCode
-            - isContributor
-            - isSubscriber
-
-
+            - lastLogin ✔
+            - locCountryCode ✔
+            - isContributor ✔
+            - isSubscriber ✔
          */
-
 
         String[] personaName = {"(personaname)", "(\":\")", "(.[^\"]*.*?)"};
         String[] rankTier = {"(rank_tier)", "(\":)", "(.[^,}]*.*?)"};
         String[] name = {".[^a](name)", "(\":)", "(.[^,}]*.*?)"};
         String[] dotaPlus = {"(plus)", "(\":)", "(.[^,}]*.*?)"};
-        // (solo_competitive_rank)(":)(.[^,}]*.*?)
-        // (leaderboard_rank)(":)(.[^,}]*.*?)
-        // (leaderboard_rank)(":)(.[^,}]*.*?)
-        // .[^_](competitive_rank)(":)(.[^,}]*.*?)
-        // .[^_](estimate)(":)(.[^,}]*.*?)
-        // (steamid)(":")(.[^,}"]*.*?)
-        // (profileurl)(":")(.[^,}"]*.*?)
-        // (last_login)(":")(.[^,}"]*.*?)
-        // (loccountrycode)(":)(.[^,}"]*.*?)
         String[] soloCompetitiveRank = {"(solo_competitive_rank)", "(\":)", "(.[^,}]*.*?)"};
         String[] competitiveRank = {".[^_](competitive_rank)", "(\":)", "(.[^,}]*.*?)"};
         String[] leaderboardRank = {"(leaderboard_rank)", "(\":)", "(.[^,}]*.*?)"};
@@ -68,12 +56,13 @@ public class PlayerData {
         String[] steamId = {"(steamid)", "(\":\")", "(.[^,}\"]*.*?)"};
         String[] profileUrl = {"(profileurl)", "(\":\")", "(.[^,}\"]*.*?)"};
         String[] lastLogin = {"(last_login)", "(\":\")", "(.[^,}\"]*.*?)"};
-
+        String[] isSubscriber = {"(is_subscriber)", "(\":)", "(.[^,}\"]*.*?)"};
+        String[] isContributor = {"(is_contributor)", "(\":)", "(.[^,}\"]*.*?)"};
 
         String[][] regexes = {personaName, rankTier, name, dotaPlus,
                               soloCompetitiveRank, competitiveRank,
                               leaderboardRank, estimate, steamId, profileUrl,
-                              lastLogin};
+                              lastLogin, isSubscriber, isContributor};
 
 
         for (int i = 0; i < regexes.length; i++) {
