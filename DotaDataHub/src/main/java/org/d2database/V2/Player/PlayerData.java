@@ -101,6 +101,9 @@ public class PlayerData {
         this.avatar = this.playerDataKeyValue.get("avatar");
     }
     //-------------------------------Getters----------------------------------
+    public String getAccountId() {
+        return this.accountId;
+    }
     public String getPersonaName() {
         return this.personaName;
     }
