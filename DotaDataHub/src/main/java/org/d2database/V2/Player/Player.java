@@ -27,5 +27,7 @@ public class Player {
     public PlayerData getPlayerData() {
         return this.playerData;
     }
+    public String getAccountId() {
+        return this.accountId;
+    }
 }
-//
