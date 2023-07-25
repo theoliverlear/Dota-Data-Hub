@@ -2,7 +2,9 @@ package org.d2database.V2;
 
 public enum Data {
     BASE_URL("https://api.opendota.com/api/"),
-    API_KEY("");
+    API_KEY(""),
+    USERNAME(""),
+    PASSWORD("");
     private String data;
     Data(String data) {
         this.data = data;
