@@ -11,38 +11,40 @@ public class PlayerDatabase extends CoreDatabase {
     }
 
     /*
---PlayerV1 Columns with Metadata Sorted Relevantly
--- account_id (INT, unique, NOT NULL, primary key)
--- persona_name (VARCHAR(255), DEFAULT NULL)
--- name (VARCHAR(255) DEFAULT NULL)
--- steam_id (BIGINT DEFAULT NULL)
--- profile_url (VARCHAR(255) DEFAULT NULL)
--- avatar (VARCHAR(255) DEFAULT NULL)
--- loc_country_code (VARCHAR(255) DEFAULT NULL)
--- last_login (DATETIME DEFAULT NULL)
--- dota_plus (VARCHAR(4,5) DEFAULT NULL)
--- is_subscriber (VARCHAR(4,5) DEFAULT NULL)
--- is_contributor (VARCHAR(4,5) DEFAULT NULL)
--- mmr_estimate (INT DEFAULT NULL)
--- rank_tier (INT DEFAULT NULL)
--- solo_competitive_rank (INT DEFAULT NULL)
--- competitive_rank (INT DEFAULT NULL)
--- leaderboard_rank (INT DEFAULT NULL)
- */
+      --PlayerV1 Columns with Metadata Sorted Relevantly
+      -- account_id (INT, unique, NOT NULL, primary key)
+      -- persona_name (VARCHAR(255), DEFAULT NULL)
+      -- name (VARCHAR(255) DEFAULT NULL)
+      -- steam_id (BIGINT DEFAULT NULL)
+      -- profile_url (VARCHAR(255) DEFAULT NULL)
+      -- avatar (VARCHAR(255) DEFAULT NULL)
+      -- loc_country_code (VARCHAR(255) DEFAULT NULL)
+      -- last_login (DATETIME DEFAULT NULL)
+      -- dota_plus (VARCHAR(4,5) DEFAULT NULL)
+      -- is_subscriber (VARCHAR(4,5) DEFAULT NULL)
+      -- is_contributor (VARCHAR(4,5) DEFAULT NULL)
+      -- mmr_estimate (INT DEFAULT NULL)
+      -- rank_tier (INT DEFAULT NULL)
+      -- solo_competitive_rank (INT DEFAULT NULL)
+      -- competitive_rank (INT DEFAULT NULL)
+      -- leaderboard_rank (INT DEFAULT NULL)
+    */
     //-----------------------------Contains-Player----------------------------
     public boolean containsPlayer(Player player) {
         String accountId = player.getAccountId();
         String query = "SELECT * FROM PlayerV1 WHERE account_id = " + accountId;
         boolean containsPlayer = true; // Would rather prevent duplicate entries
-        // than having to delete them later
+                                       // than having to delete them later
         try {
-            Statement statement = this.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet;
+            try (Statement statement = this.getConnection().createStatement()) {
+                resultSet = statement.executeQuery(query);
+            }
             containsPlayer = resultSet.next();
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("Failure in querying player in database! Returning true" +
-                    " to prevent duplicate entries");
+                    " to prevent duplicate entries.");
         }
         return containsPlayer;
     }
@@ -128,8 +130,10 @@ public class PlayerDatabase extends CoreDatabase {
                     mmrEstimate, rankTier, soloCompetitiveRank, competitiveRank,
                     leaderboardRank);
             try {
-                Statement statement = this.getConnection().createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
+                ResultSet resultSet;
+                try (Statement statement = this.getConnection().createStatement()) {
+                    resultSet = statement.executeQuery(query);
+                }
                 playerDataMatches = resultSet.next();
             } catch (SQLException ex) {
                 ex.printStackTrace();
