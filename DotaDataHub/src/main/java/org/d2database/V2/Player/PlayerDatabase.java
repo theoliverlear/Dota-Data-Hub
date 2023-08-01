@@ -1,6 +1,7 @@
 package org.d2database.V2.Player;
 
-import java.sql.PreparedStatement;
+import org.d2database.V2.CoreDatabase;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
@@ -39,17 +40,18 @@ public class PlayerDatabase extends CoreDatabase {
             ResultSet resultSet;
             try (Statement statement = this.getConnection().createStatement()) {
                 resultSet = statement.executeQuery(query);
+                containsPlayer = resultSet.next();
             }
-            containsPlayer = resultSet.next();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.err.println("Failure in querying player in database! Returning true" +
-                    " to prevent duplicate entries.");
+            System.err.println("Failure in querying player in database! " +
+                               "Returning true to prevent duplicate entries.");
         }
         return containsPlayer;
     }
     //----------------------------Update-Sequence-----------------------------
-    public void update(Player player) {
+    public void insertSequence(Player player) {
         boolean containsPlayer = this.containsPlayer(player);
         if (containsPlayer) {
             boolean playerDataMatches = this.playerDataMatches(player);
@@ -92,16 +94,13 @@ public class PlayerDatabase extends CoreDatabase {
                     isContributor, mmrEstimate, rankTier, soloCompetitiveRank,
                     competitiveRank, leaderboardRank);
             this.commandQuery(query);
-        } else {
-            System.out.println("Player (" + accountId + ") already exists in database. Not inserting...");
         }
     }
-
     //-----------------------------Match-Player-Data--------------------------
     public boolean playerDataMatches(Player player) {
         boolean playerDataMatches;
+        String accountId = player.getAccountId();
         if (this.containsPlayer(player)) {
-            String accountId = player.getAccountId();
             String personaName = player.getPlayerData().getPersonaName();
             String name = player.getPlayerData().getName();
             String steamId = player.getPlayerData().getSteamId();
@@ -133,8 +132,9 @@ public class PlayerDatabase extends CoreDatabase {
                 ResultSet resultSet;
                 try (Statement statement = this.getConnection().createStatement()) {
                     resultSet = statement.executeQuery(query);
+                    playerDataMatches = resultSet.next();
                 }
-                playerDataMatches = resultSet.next();
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 System.err.println("Failure in querying player in database! Returning true" +
@@ -142,7 +142,7 @@ public class PlayerDatabase extends CoreDatabase {
                 playerDataMatches = true;
             }
         } else {
-            System.out.println("Player (" + player.getAccountId() + ") does " +
+            System.out.println("Player (" + accountId + ") does " +
                                "not exist in database. Not matching...");
             playerDataMatches = true;
         }
