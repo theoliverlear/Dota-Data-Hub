@@ -1,7 +1,5 @@
-package org.d2database.V2.Player;
-
+package org.d2database.V2;
 import org.d2database.V2.Data;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -9,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class CoreDatabase {
     Connection connection;
@@ -23,36 +22,22 @@ public class CoreDatabase {
     }
     //------------------------------Load-Driver-------------------------------
     public void loadDriver() {
-
         String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-
     }
     //----------------------------Set-Login-Data------------------------------
     public void setLoginData() {
         String path = "C:\\Users\\olive\\OneDrive\\Documents\\" +
                 "Key Folder\\CryptoTraderLogin.txt";
         File file = new File(path);
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        String username = "";
-        String password = "";
-        if (scanner != null) {
-            while (scanner.hasNext()) {
-                username = scanner.next();
-                password = scanner.next();
-            }
-        }
-        Data.USERNAME.setData(username);
-        Data.PASSWORD.setData(password);
+        FileDataRetriever username = new FileDataRetriever(0, path);
+        FileDataRetriever password = new FileDataRetriever(1, path);
+        Data.USERNAME.setData(username.getData());
+        Data.PASSWORD.setData(password.getData());
     }
     //--------------------------Form-Connection-URL---------------------------
     public void formConnectionUrl() {
@@ -90,6 +75,7 @@ public class CoreDatabase {
             ex.printStackTrace();
         }
     }
+    //---------------------------Make-Query-Request---------------------------
     public void commandQuery(String command) {
         try {
             try (PreparedStatement statement = this.getConnection().prepareStatement(command)) {
@@ -100,9 +86,6 @@ public class CoreDatabase {
             this.reconnect();
         }
     }
-
-
-
     //--------------------------Getters-And-Setters---------------------------
     public Connection getConnection() {
         return this.connection;
