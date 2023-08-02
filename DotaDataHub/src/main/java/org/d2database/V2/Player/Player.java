@@ -13,7 +13,6 @@ public class Player {
         this.getJson();  // Initializes playerJson
         //-------------------Create-Player-Data-Object------------------------
         this.playerData = new PlayerData(this.accountId, this.playerJson);
-
     }
     public void getJson() {
         String connPath = "players/" + this.accountId;

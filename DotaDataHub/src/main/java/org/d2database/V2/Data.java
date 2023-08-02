@@ -1,6 +1,6 @@
 package org.d2database.V2;
 
-public enum Data {
+public enum Data { // Data is too simple, be more specific
     BASE_URL("https://api.opendota.com/api/"),
     API_KEY(""),
     USERNAME(""),

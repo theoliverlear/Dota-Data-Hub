@@ -1,13 +1,9 @@
 package org.d2database.V2;
-import org.d2database.V2.Data;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
-import java.util.logging.Logger;
+
 
 public class CoreDatabase {
     Connection connection;
@@ -32,8 +28,7 @@ public class CoreDatabase {
     //----------------------------Set-Login-Data------------------------------
     public void setLoginData() {
         String path = "C:\\Users\\olive\\OneDrive\\Documents\\" +
-                "Key Folder\\CryptoTraderLogin.txt";
-        File file = new File(path);
+                      "Key Folder\\CryptoTraderLogin.txt";
         FileDataRetriever username = new FileDataRetriever(0, path);
         FileDataRetriever password = new FileDataRetriever(1, path);
         Data.USERNAME.setData(username.getData());
@@ -62,8 +57,7 @@ public class CoreDatabase {
         }
         if (this.connection != null) {
             System.out.println("Connected to database!");
-        }
-        else {
+        } else {
             System.out.println("Failed to connect to database!");
         }
     }
