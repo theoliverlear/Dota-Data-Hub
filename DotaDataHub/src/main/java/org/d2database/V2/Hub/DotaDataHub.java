@@ -1,4 +1,4 @@
-package org.d2database.V2;
+package org.d2database.V2.Hub;
 
 public class DotaDataHub {
 
