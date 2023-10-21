@@ -34,11 +34,11 @@ public class Player implements JsonData, ParseJsonData {
         //-----------------------Instantiate-Variables------------------------
         this.instantiateFromMap();
         this.fetchWinLoss();
-        this.fetchPlayerMatches();
         //-------------------Instantiate-Matches-Variables--------------------
         this.playerMatches = new ArrayList<>();
-        this.fetchPlayerMatches();
         this.fetchPlayerMatchesJson();
+        this.fetchPlayerMatches();
+
     }
     //------------------------------Get-Json----------------------------------
     @Override
@@ -199,6 +199,7 @@ public class Player implements JsonData, ParseJsonData {
     }
     //---------------------Instantiate-Add-Matches-From-Map-------------------
     public void instantiateAddMatchesFromMap(HashMap<String, String> matchKeyValue) {
+        String accountIdString = this.accountId;
         String matchIdString = matchKeyValue.get("match_id");
         String playerSlotString = matchKeyValue.get("player_slot");
         String playerTeamString = Utility.determineTeam(matchKeyValue.get("player_slot"));
@@ -216,14 +217,18 @@ public class Player implements JsonData, ParseJsonData {
         String assistsString = matchKeyValue.get("assists");
         String averageRankString = matchKeyValue.get("average_rank");
         String leaverStatusString = matchKeyValue.get("leaver_status");
-        String partySizeString = matchKeyValue.get("party_size");
+        String partySizeString = matchKeyValue.get("party_size").replace("}", "").trim();
+        if (partySizeString.contains("null")) {
+            partySizeString = "null";
+        }
 
-        SmallPlayerMatch smallPlayerMatch = new SmallPlayerMatch(matchIdString,
-                playerTeamString, playerWinString, playerColorString,
-                playerWinString, durationString, gameModeString, lobbyTypeString,
-                heroIdString, startTimeString, versionString, killsString,
-                deathsString, assistsString, averageRankString,
-                leaverStatusString, partySizeString);
+        SmallPlayerMatch smallPlayerMatch = new SmallPlayerMatch(
+                accountIdString, matchIdString, playerTeamString,
+                playerWinString, playerColorString, playerWinString,
+                durationString, gameModeString, lobbyTypeString, heroIdString,
+                startTimeString, versionString, killsString, deathsString,
+                assistsString, averageRankString, leaverStatusString,
+                partySizeString);
         this.playerMatches.add(smallPlayerMatch);
     }
     //-------------------------------Getters----------------------------------
