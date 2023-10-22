@@ -3,8 +3,11 @@ package org.d2database.V2.Hub;
 import org.d2database.V2.Data;
 import org.d2database.V2.FileDataRetriever;
 import org.d2database.V2.Player.Player;
+import org.d2database.V2.Player.PlayerDatabase;
 import org.d2database.V2.Player.SmallPlayerMatch;
 import org.d2database.V2.Player.SmallPlayerMatchDatabase;
+
+import java.util.ArrayList;
 
 public class PlayerHub {
     String accountId;
@@ -46,16 +49,38 @@ public class PlayerHub {
                 smallPlayerMatchDatabase.insertSequence(match);
             }
         });
-        threadOne.start();
-        threadTwo.start();
-        threadThree.start();
-        try {
-            threadOne.join();
-            threadTwo.join();
-            threadThree.join();
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        }
+//        threadOne.start();
+//        threadTwo.start();
+//        threadThree.start();
+//        try {
+//            threadOne.join();
+//            threadTwo.join();
+//            threadThree.join();
+//        } catch (InterruptedException ex) {
+//            throw new RuntimeException(ex);
+//        }
+        PlayerDatabase playerDatabase = new PlayerDatabase();
+        MatchHub matchHubOne = new MatchHub("1772444224");
+        ArrayList<Player> players = matchHubOne.getMatch().getPlayers();
+        ArrayList<Thread> threads = new ArrayList<>();
+        players.forEach(player -> {
+            Thread thread = new Thread(() -> {
+                PlayerHub playerHub = new PlayerHub(player.getAccountId());
+                playerDatabase.insertSequence(playerHub.getPlayer());
+                for (SmallPlayerMatch match : playerHub.getPlayer().getPlayerMatches()) {
+                    smallPlayerMatchDatabase.insertSequence(match);
+                }
+            });
+            threads.add(thread);
+        });
+        threads.forEach(Thread::start);
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
     //-------------------------------Getters----------------------------------
     public String getAccountId() {
