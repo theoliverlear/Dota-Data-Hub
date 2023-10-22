@@ -110,9 +110,9 @@ public class SmallPlayerMatchDatabase extends CoreDatabase {
                         smallPlayerMatch.getLobbyType(), smallPlayerMatch.getPartySize(),
                         smallPlayerMatch.getAverageRank(), smallPlayerMatch.getPlayerColor(),
                         smallPlayerMatch.getLeaverStatus(), smallPlayerMatch.getVersion());
-                System.out.printf("Table: %s - Adding match: %s\n", tableName,
-                        smallPlayerMatch.getMatchId());
             }
+            System.out.printf("Table: %s - Adding match: %s\n", tableName,
+                        smallPlayerMatch.getMatchId());
             this.commandQuery(query);
         }
     }
