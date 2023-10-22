@@ -27,7 +27,7 @@ public class Player implements JsonData, ParseJsonData {
     public Player(String accountId) {
         this.accountId = accountId;
         //-----------------------Invoke-Connection----------------------------
-        this.getJson();  // Initializes playerJson
+        this.fetchJson();  // Initializes playerJson
         this.calcNumKeyValues();
         this.playerKeyValue = new HashMap<>();
         this.fetchDatasetFromJson();
@@ -40,9 +40,9 @@ public class Player implements JsonData, ParseJsonData {
         this.fetchPlayerMatches();
 
     }
-    //------------------------------Get-Json----------------------------------
+    //-----------------------------Fetch-Json---------------------------------
     @Override
-    public void getJson() {
+    public void fetchJson() {
         String connPath = "players/" + this.accountId;
         ApiConnection accountIdJson = new ApiConnection(connPath, "GET");
         this.playerJson = accountIdJson.getJson(); // This getJson() is from the API
