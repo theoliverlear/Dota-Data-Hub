@@ -19,14 +19,14 @@ public class PlayerWinLoss implements JsonData {
     String winRate;
     public PlayerWinLoss(String accountId) {
         this.accountId = accountId;
-        this.getJson();
+        this.fetchJson();
         this.winLossKeyValue = new HashMap<>();
         this.fetchDatasetFromJson();
         this.instantiateFromMap();
     }
     //------------------------------Get-Json----------------------------------
     @Override
-    public void getJson() {
+    public void fetchJson() {
         String connPath = "players/" + this.accountId + "/wl";
         ApiConnection accountIdWLJson = new ApiConnection(connPath, "GET");
         this.playerJson = accountIdWLJson.getJson();
