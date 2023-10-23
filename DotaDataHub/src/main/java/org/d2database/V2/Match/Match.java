@@ -17,7 +17,7 @@ public class Match implements JsonData, ParseJsonData {
     StringBuilder matchJson;
     HashMap<String, String> matchKeyValue;
     ArrayList<Player> players;
-    //-----------------------------Constructor---------------------------------
+    //-----------------------------Constructor--------------------------------
     public Match(String matchId) {
         this.matchId = matchId;
         this.matchJson = new StringBuilder();
