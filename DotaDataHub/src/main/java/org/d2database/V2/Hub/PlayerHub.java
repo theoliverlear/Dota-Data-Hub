@@ -1,7 +1,7 @@
 package org.d2database.V2.Hub;
 
 import org.d2database.V2.Data;
-import org.d2database.V2.FileDataRetriever;
+import org.d2database.V2.FileLineRetriever;
 import org.d2database.V2.Player.Player;
 import org.d2database.V2.Player.PlayerDatabase;
 import org.d2database.V2.Player.SmallPlayerMatch;
@@ -19,10 +19,9 @@ public class PlayerHub {
     }
     public static void main(String[] args) {
         //-------------------------Set-API-Variable---------------------------
-        String path = "C:\\Users\\olive\\OneDrive\\Documents\\" +
-                      "Key Folder\\OpenDota\\OpenDotaAPIKeys.txt";
-        FileDataRetriever fileDataRetriever = new FileDataRetriever(0, path);
-        String apiKey = fileDataRetriever.getData();
+        String path = "src/main/resources/api_key.txt";
+        FileLineRetriever fileLineRetriever = new FileLineRetriever(0, path);
+        String apiKey = fileLineRetriever.getData();
         Data.API_KEY.setData(apiKey);
         //-----------------------Connection-Variables-------------------------
         PlayerHub playerHubOne = new PlayerHub("348245720");
@@ -67,9 +66,9 @@ public class PlayerHub {
             Thread thread = new Thread(() -> {
                 PlayerHub playerHub = new PlayerHub(player.getAccountId());
                 playerDatabase.insertSequence(playerHub.getPlayer());
-                for (SmallPlayerMatch match : playerHub.getPlayer().getPlayerMatches()) {
-                    smallPlayerMatchDatabase.insertSequence(match);
-                }
+//                for (SmallPlayerMatch match : playerHub.getPlayer().getPlayerMatches()) {
+//                    smallPlayerMatchDatabase.insertSequence(match);
+//                }
             });
             threads.add(thread);
         });

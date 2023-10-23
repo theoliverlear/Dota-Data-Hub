@@ -24,10 +24,9 @@ public class CoreDatabase {
     }
     //----------------------------Set-Login-Data------------------------------
     public void setLoginData() {
-        String path = "C:\\Users\\olive\\OneDrive\\Documents\\" +
-                      "Key Folder\\CryptoTraderLogin.txt";
-        FileDataRetriever username = new FileDataRetriever(0, path);
-        FileDataRetriever password = new FileDataRetriever(1, path);
+        String path = "src/main/resources/azure_connect.txt";
+        FileLineRetriever username = new FileLineRetriever(0, path);
+        FileLineRetriever password = new FileLineRetriever(1, path);
         Data.USERNAME.setData(username.getData());
         Data.PASSWORD.setData(password.getData());
     }
