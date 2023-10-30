@@ -78,6 +78,9 @@ public class PlayerDatabase extends CoreDatabase {
             String avatar = player.getAvatar();
             String locCountryCode = player.getLocCountryCode();
             String lastLogin = player.getLastLogin();
+            if (lastLogin == null) {
+                lastLogin = "NULL";
+            }
             String dotaPlus = player.getDotaPlus();
             String isSubscriber = player.getIsSubscriber();
             String isContributor = player.getIsContributor();
@@ -90,21 +93,38 @@ public class PlayerDatabase extends CoreDatabase {
             String loss = player.getLoss();
             String totalMatches = player.getTotalMatches();
             String winRate = player.getWinRate();
-
-            String query = String.format("INSERT INTO PlayerV1 (account_id," +
-                            " persona_name, name, steam_id, profile_url," +
-                            " avatar, loc_country_code, last_login, " +
-                            "dota_plus, is_subscriber, is_contributor, " +
-                            "mmr_estimate, rank_tier, solo_competitive_rank," +
-                            " competitive_rank, leaderboard_rank, win, loss," +
-                            " total_matches, win_rate) VALUES (%s, '%s', " +
-                            "'%s', %s, '%s', '%s', '%s', '%s', '%s', '%s', " +
-                            "'%s', %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                    accountId, personaName, name, steamId, profileUrl, avatar,
-                    locCountryCode, lastLogin, dotaPlus, isSubscriber,
-                    isContributor, mmrEstimate, rankTier, soloCompetitiveRank,
-                    competitiveRank, leaderboardRank, win, loss, totalMatches,
-                    winRate);
+            String query;
+            if (lastLogin.equals("NULL")) {
+                query = String.format("INSERT INTO PlayerV1 (account_id," +
+                                " persona_name, name, steam_id, profile_url," +
+                                " avatar, loc_country_code, last_login, " +
+                                "dota_plus, is_subscriber, is_contributor, " +
+                                "mmr_estimate, rank_tier, solo_competitive_rank," +
+                                " competitive_rank, leaderboard_rank, win, loss," +
+                                " total_matches, win_rate) VALUES (%s, '%s', " +
+                                "'%s', %s, '%s', '%s', '%s', %s, '%s', '%s', " +
+                                "'%s', %s, '%s', %s, %s, %s, %s, %s, %s, %s)",
+                        accountId, personaName, name, steamId, profileUrl, avatar,
+                        locCountryCode, lastLogin, dotaPlus, isSubscriber,
+                        isContributor, mmrEstimate, rankTier, soloCompetitiveRank,
+                        competitiveRank, leaderboardRank, win, loss, totalMatches,
+                        winRate);
+            } else {
+                query = String.format("INSERT INTO PlayerV1 (account_id," +
+                                " persona_name, name, steam_id, profile_url," +
+                                " avatar, loc_country_code, last_login, " +
+                                "dota_plus, is_subscriber, is_contributor, " +
+                                "mmr_estimate, rank_tier, solo_competitive_rank," +
+                                " competitive_rank, leaderboard_rank, win, loss," +
+                                " total_matches, win_rate) VALUES (%s, '%s', " +
+                                "'%s', %s, '%s', '%s', '%s', '%s', '%s', '%s', " +
+                                "'%s', %s, '%s', %s, %s, %s, %s, %s, %s, %s)",
+                        accountId, personaName, name, steamId, profileUrl, avatar,
+                        locCountryCode, lastLogin, dotaPlus, isSubscriber,
+                        isContributor, mmrEstimate, rankTier, soloCompetitiveRank,
+                        competitiveRank, leaderboardRank, win, loss, totalMatches,
+                        winRate);
+            }
             this.commandQuery(query);
         }
     }
