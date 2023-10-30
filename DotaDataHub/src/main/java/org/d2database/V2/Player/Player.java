@@ -111,7 +111,7 @@ public class Player implements JsonData, ParseJsonData {
     //-------------------------Instantiate-From-Map---------------------------
     public void instantiateFromMap() {
         this.personaName = this.playerKeyValue.get("personaname");
-        this.rankTier = this.playerKeyValue.get("rank_tier");
+        this.rankTier = Utility.determineRank(this.playerKeyValue.get("rank_tier"));
         this.name = this.playerKeyValue.get("name");
         this.dotaPlus = this.playerKeyValue.get("plus");
         this.soloCompetitiveRank = this.playerKeyValue.get("solo_competitive_rank");
